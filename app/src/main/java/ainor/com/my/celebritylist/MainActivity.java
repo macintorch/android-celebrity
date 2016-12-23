@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> celebURLs = new ArrayList<String>();
     ArrayList<String> celebNames = new ArrayList<String>();
     int chosenCeleb = 0;
+
+    ImageView mImageView;
 
     public class ImageDownloader extends AsyncTask<String,Void,Bitmap> {
 
@@ -109,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mImageView = (ImageView) findViewById(R.id.imageView);
+
 
         DownloadTask task = new DownloadTask();
 
@@ -139,6 +144,14 @@ public class MainActivity extends AppCompatActivity {
             Random random = new Random();
 
             chosenCeleb = random.nextInt(celebURLs.size());
+
+            ImageDownloader imageTask = new ImageDownloader();
+
+            Bitmap celebImage;
+
+            celebImage = imageTask.execute(celebURLs.get(chosenCeleb)).get();
+
+            mImageView.setImageBitmap(celebImage);
 
 
 
