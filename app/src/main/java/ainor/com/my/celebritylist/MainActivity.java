@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             result = task.execute("http://www.posh24.com/celebrities").get();
 
+            String[] splitResult = result.split("<div class=\"sidebarContainer\">");
+
             Log.i("Content of url", result);
 
         } catch (InterruptedException e) {
