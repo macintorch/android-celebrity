@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView mImageView;
 
+    Button button1;
+    Button button2;
+    Button button3;
+    Button button4;
+
     public class ImageDownloader extends AsyncTask<String,Void,Bitmap> {
 
 
@@ -100,10 +105,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    Button button1;
-    Button button2;
-    Button button3;
-    Button button4;
+
 
     public void chooseAnswer(View view) {
         Log.i("Button pressed", "Pressed");
@@ -115,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mImageView = (ImageView) findViewById(R.id.imageView);
+        button1 = (Button) findViewById(R.id.button1);
+        button2 = (Button) findViewById(R.id.button2);
+        button3 = (Button) findViewById(R.id.button3);
+        button4 = (Button) findViewById(R.id.button4);
 
 
         DownloadTask task = new DownloadTask();
@@ -126,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
             String[] splitResult = result.split("<div class=\"sidebarContainer\">");
 
-            Pattern p = Pattern.compile("src=\"(.*?)\"");
+            Pattern p = Pattern.compile("img src=\"(.*?)\"");
             //Pattern p = Pattern.compile("mi(.*)pi");
 
             Matcher m = p.matcher(splitResult[0]);
@@ -172,6 +178,11 @@ public class MainActivity extends AppCompatActivity {
                     answers[i] = celebNames.get(incorrectAnswerLocation);
                 }
             }
+
+            button1.setText(answers[0]);
+            button2.setText(answers[1]);
+            button3.setText(answers[2]);
+            button4.setText(answers[3]);
 
 
 
