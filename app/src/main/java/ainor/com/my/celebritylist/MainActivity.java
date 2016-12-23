@@ -113,6 +113,50 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Wrong! It was " + celebNames.get(chosenCeleb), Toast.LENGTH_LONG).show();
         }
+
+        createNewQuestion();
+    }
+
+    public void createNewQuestion() {
+        Random random = new Random();
+
+        chosenCeleb = random.nextInt(celebURLs.size());
+
+        ImageDownloader imageTask = new ImageDownloader();
+
+        Bitmap celebImage;
+
+        try {
+            celebImage = imageTask.execute(celebURLs.get(chosenCeleb)).get();
+            mImageView.setImageBitmap(celebImage);
+
+            locationOfCorrectAnswer = random.nextInt(4);
+
+            int incorrectAnswerLocation;
+
+            for (int i = 0; i < 4; i++) {
+                if ( i == locationOfCorrectAnswer) {
+                    answers[i] = celebNames.get(chosenCeleb);
+                } else {
+                    incorrectAnswerLocation = random.nextInt(celebURLs.size());
+
+                    while (incorrectAnswerLocation == chosenCeleb) {
+                        incorrectAnswerLocation = random.nextInt(celebURLs.size());
+                    }
+
+                    answers[i] = celebNames.get(incorrectAnswerLocation);
+                }
+            }
+
+            button1.setText(answers[0]);
+            button2.setText(answers[1]);
+            button3.setText(answers[2]);
+            button4.setText(answers[3]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
@@ -152,41 +196,9 @@ public class MainActivity extends AppCompatActivity {
                 celebNames.add(m.group(1));
             }
 
+            createNewQuestion();
 
-            Random random = new Random();
 
-            chosenCeleb = random.nextInt(celebURLs.size());
-
-            ImageDownloader imageTask = new ImageDownloader();
-
-            Bitmap celebImage;
-
-            celebImage = imageTask.execute(celebURLs.get(chosenCeleb)).get();
-
-            mImageView.setImageBitmap(celebImage);
-
-            locationOfCorrectAnswer = random.nextInt(4);
-
-            int incorrectAnswerLocation;
-
-            for (int i = 0; i < 4; i++) {
-                if ( i == locationOfCorrectAnswer) {
-                    answers[i] = celebNames.get(chosenCeleb);
-                } else {
-                    incorrectAnswerLocation = random.nextInt(celebURLs.size());
-
-                    while (incorrectAnswerLocation == chosenCeleb) {
-                        incorrectAnswerLocation = random.nextInt(celebURLs.size());
-                    }
-
-                    answers[i] = celebNames.get(incorrectAnswerLocation);
-                }
-            }
-
-            button1.setText(answers[0]);
-            button2.setText(answers[1]);
-            button3.setText(answers[2]);
-            button4.setText(answers[3]);
 
 
 
